@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varun — Mechanical Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEEDE6;
+    --paper-raised: #F5F4EF;
+    --ink: #1B211E;
+    --graphite: #5B6259;
+    --blueprint: #2C5A82;
+    --signal: #C1481D;
+    --line: #C9C6BB;
+    --line-strong: #A9A69B;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* --- ruler / tick divider, used as a section separator instead of a plain line --- */
+  .ruler {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .ruler svg { display: block; width: 100%; height: 14px; }
+  .ruler line { stroke: var(--line-strong); stroke-width: 1; }
+
+  /* --- header --- */
+  header {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .title-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .role-line {
+    color: var(--graphite);
+    font-size: 1.05rem;
+    max-width: 46ch;
+  }
+  .meta-strip {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--graphite);
+    line-height: 1.9;
+  }
+  .meta-strip a { text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  .meta-strip a:hover { border-color: var(--blueprint); color: var(--blueprint); }
+
+  /* --- intro --- */
+  .intro {
+    padding: 36px 0 8px;
+    max-width: 62ch;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  /* --- project sections --- */
+  .project {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .project:last-of-type { border-bottom: none; }
+
+  .project-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .project-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  .project-duration {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--graphite);
+    white-space: nowrap;
+  }
+  .project-org {
+    color: var(--blueprint);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    margin-bottom: 22px;
+  }
+
+  .project-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+
+  .schematic {
+    border: 1px solid var(--line-strong);
+    background: var(--paper-raised);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .schematic svg { width: 78%; height: 78%; }
+  .schematic-label {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--graphite);
+    letter-spacing: 0.02em;
+  }
+
+  .project-desc p {
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .project-desc p:last-child { margin-bottom: 0; }
+
+  .role-note {
+    color: var(--graphite);
+    font-size: 0.92rem;
+  }
+
+  /* spec callouts — dimension-line style */
+  .specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin: 18px 0 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .spec {
+    min-width: 120px;
+  }
+  .spec-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.15rem;
+    color: var(--signal);
+    font-weight: 500;
+    display: block;
+  }
+  .spec-label {
+    font-size: 0.74rem;
+    color: var(--graphite);
+    margin-top: 2px;
+  }
+
+  /* --- skills --- */
+  .skills-section { padding: 48px 0; }
+  .skills-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 22px;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 28px;
+  }
+  .skill-group-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--blueprint);
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+  }
+  .skill-group-items {
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  /* --- footer --- */
+  footer {
+    padding: 40px 0 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-note {
+    color: var(--graphite);
+    font-size: 0.85rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .resume-link {
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 10px 20px;
+    display: inline-block;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .resume-link:hover { background: var(--ink); color: var(--paper); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .resume-link { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="title-block">
+      <div>
+        <h1>Varun [Last Name]</h1>
+        <div class="role-line">Mechanical engineering student at Carnegie Mellon, focused on mechanism design, FEA, and design validation.</div>
+      </div>
+      <div class="meta-strip">
+        Pittsburgh, PA<br>
+        <a href="mailto:you@andrew.cmu.edu">you@andrew.cmu.edu</a><br>
+        <a href="#">linkedin.com/in/yourname</a><br>
+        <a href="resume.pdf">resume.pdf</a>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    Three projects below span mechanism design, medical-device analysis, and R&amp;D prototyping — from a spot-welding gantry built to ±0.16mm accuracy, to a spinal implant driver analyzed through a full hand-calc chain, to a robotic dosing pump built into a 1-inch cube.
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= PROJECT 1: CNC GANTRY WELDER ================= -->
+  <div class="wrap">
+    <section class="project" id="project-cnc">
+      <div class="project-head">
+        <h2 class="project-name">Automated CNC Gantry Spot Welder</h2>
+        <span class="project-duration mono">Senior Capstone</span>
+      </div>
+      <div class="project-org">Carnegie Mellon Mechanical Engineering</div>
+
+      <div class="project-body">
+        <div class="schematic">
+          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="160" height="110" stroke="#1B211E" stroke-width="1.5"/>
+            <line x1="20" y1="45" x2="180" y2="45" stroke="#2C5A82" stroke-width="1.5"/>
+            <rect x="70" y="45" width="10" height="70" fill="#2C5A82"/>
+            <circle cx="75" cy="115" r="5" stroke="#C1481D" stroke-width="1.5"/>
+            <line x1="20" y1="20" x2="20" y2="130" stroke="#5B6259" stroke-width="1"/>
+            <line x1="180" y1="20" x2="180" y2="130" stroke="#5B6259" stroke-width="1"/>
+            <line x1="12" y1="20" x2="16" y2="20" stroke="#5B6259" stroke-width="1"/>
+            <line x1="12" y1="130" x2="16" y2="130" stroke="#5B6259" stroke-width="1"/>
+          </svg>
+          <span class="schematic-label">XY GANTRY — TOP VIEW · replace with CAD render or photo</span>
+        </div>
+
+        <div class="project-desc">
+          <p>Designed and built a 3-axis gantry system that positions and fires a spot welder across a 12×12" workspace, using camera targeting and load-cell feedback with stored, replayable multi-point weld sequences.</p>
+          <p class="role-note">My contributions: XY drivetrain design (motor mounts, belt routing, tensioners), MATLAB motor sizing from torque-speed curves, FEA on the Z-axis mounting brackets, and positional accuracy validation across 15 trials.</p>
+        </div>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="spec-value mono">±0.16mm</span><span class="spec-label">achieved accuracy (target ±0.25mm)</span></div>
+        <div class="spec"><span class="spec-value mono">12×12"</span><span class="spec-label">workspace</span></div>
+        <div class="spec"><span class="spec-value mono">&lt;10s</span><span class="spec-label">weld cycle time</span></div>
+        <div class="spec"><span class="spec-value mono">6×</span><span class="spec-label">Z-axis safety margin (24kg cap. vs 4kg load)</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="ruler"><svg preserveAspectRatio="none" viewBox="0 0 900 14"><line x1="0" y1="7" x2="900" y2="7"/><line x1="0" y1="2" x2="0" y2="12"/><line x1="150" y1="4" x2="150" y2="10"/><line x1="300" y1="4" x2="300" y2="10"/><line x1="450" y1="2" x2="450" y2="12"/><line x1="600" y1="4" x2="600" y2="10"/><line x1="750" y1="4" x2="750" y2="10"/><line x1="900" y1="2" x2="900" y2="12"/></svg></div>
+
+  <!-- ================= PROJECT 2: SPINAL IMPACTION DEVICE ================= -->
+  <div class="wrap">
+    <section class="project" id="project-impaction">
+      <div class="project-head">
+        <h2 class="project-name">Spinal Impaction Device for Pedicle Screw Driver</h2>
+        <span class="project-duration mono">Co-op</span>
+      </div>
+      <div class="project-org">CTL — Medical Device Co-op</div>
+
+      <div class="project-body">
+        <div class="schematic">
+          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="40" y1="75" x2="160" y2="75" stroke="#1B211E" stroke-width="1.5"/>
+            <path d="M120 75 L120 60 L145 60 L145 90 L120 90 Z" stroke="#2C5A82" stroke-width="1.5"/>
+            <line x1="120" y1="65" x2="140" y2="65" stroke="#C1481D" stroke-width="1"/>
+            <line x1="120" y1="85" x2="140" y2="85" stroke="#C1481D" stroke-width="1"/>
+            <line x1="40" y1="65" x2="40" y2="85" stroke="#5B6259" stroke-width="1"/>
+            <line x1="160" y1="60" x2="160" y2="90" stroke="#5B6259" stroke-width="1"/>
+          </svg>
+          <span class="schematic-label">SLOTTED BOLT / TAPERED NUT — SECTION · replace with CAD render or photo</span>
+        </div>
+
+        <div class="project-desc">
+          <p>Designed a compact interference-fit mechanism to prevent unintended quick-connect release during surgical impaction — a slotted, slit-cut bolt mating with a tapered nut that induces radial deflection in the finger elements, specified in 17-4 PH stainless with 3D-printed proof-of-concept validation.</p>
+          <p class="role-note">Built the full analytical chain end to end: axial load estimation from surgical counter-torque impaction, cantilever beam modeling of the slit-cut fingers, power-screw taper-to-clamping-force conversion, friction sufficiency check, and von Mises stress verification at the slit roots.</p>
+        </div>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="spec-value mono">17-4 PH</span><span class="spec-label">stainless steel spec'd</span></div>
+        <div class="spec"><span class="spec-value mono">5</span><span class="spec-label">stage analytical chain, load → stress</span></div>
+        <div class="spec"><span class="spec-value mono">3D-print</span><span class="spec-label">proof-of-concept validation</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="ruler"><svg preserveAspectRatio="none" viewBox="0 0 900 14"><line x1="0" y1="7" x2="900" y2="7"/><line x1="0" y1="2" x2="0" y2="12"/><line x1="150" y1="4" x2="150" y2="10"/><line x1="300" y1="4" x2="300" y2="10"/><line x1="450" y1="2" x2="450" y2="12"/><line x1="600" y1="4" x2="600" y2="10"/><line x1="750" y1="4" x2="750" y2="10"/><line x1="900" y1="2" x2="900" y2="12"/></svg></div>
+
+  <!-- ================= PROJECT 3: J&J ROBOTIC PUMP ================= -->
+  <div class="wrap">
+    <section class="project" id="project-pump">
+      <div class="project-head">
+        <h2 class="project-name">Robotic Dosing Pump</h2>
+        <span class="project-duration mono">May – Aug 2026</span>
+      </div>
+      <div class="project-org">Johnson &amp; Johnson MedTech — Strategic Robotics R&amp;D, Santa Clara CA</div>
+
+      <div class="project-body">
+        <div class="schematic">
+          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="75" y="45" width="50" height="50" stroke="#1B211E" stroke-width="1.5"/>
+            <line x1="75" y1="70" x2="45" y2="70" stroke="#2C5A82" stroke-width="1.5"/>
+            <line x1="125" y1="70" x2="155" y2="70" stroke="#2C5A82" stroke-width="1.5"/>
+            <circle cx="100" cy="70" r="12" stroke="#C1481D" stroke-width="1.2"/>
+            <line x1="75" y1="40" x2="125" y2="40" stroke="#5B6259" stroke-width="1"/>
+            <line x1="75" y1="36" x2="75" y2="44" stroke="#5B6259" stroke-width="1"/>
+            <line x1="125" y1="36" x2="125" y2="44" stroke="#5B6259" stroke-width="1"/>
+          </svg>
+          <span class="schematic-label">PUMP MODULE — 1×1×1" ENVELOPE · replace with CAD render or photo</span>
+        </div>
+
+        <div class="project-desc">
+          <p>Prototyped a robotic pump for precise dosing across 8 fluids spanning a 0–150 cP viscosity range, including shear-thinning fluids, constrained to a 1×1×1" form factor.</p>
+          <p class="role-note">Ran hand calculations to predict pump headloss and flow, validated against benchtop testing and off-the-shelf alternatives, and designed custom test fixtures to benchmark those instruments — work that informed development requirements for future instrumentation.</p>
+        </div>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="spec-value mono">8</span><span class="spec-label">fluids dosed</span></div>
+        <div class="spec"><span class="spec-value mono">0–150 cP</span><span class="spec-label">viscosity range</span></div>
+        <div class="spec"><span class="spec-value mono">1×1×1"</span><span class="spec-label">form factor</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= SKILLS ================= -->
+  <div class="wrap">
+    <section class="skills-section">
+      <h2 class="skills-heading">Tools &amp; methods</h2>
+      <div class="skills-grid">
+        <div>
+          <div class="skill-group-label mono">CAD / ANALYSIS</div>
+          <div class="skill-group-items">SolidWorks · FEA · GD&amp;T · MATLAB</div>
+        </div>
+        <div>
+          <div class="skill-group-label mono">VALIDATION</div>
+          <div class="skill-group-items">Hand-calc verification · benchtop testing · fixture design · tolerance stack-up</div>
+        </div>
+        <div>
+          <div class="skill-group-label mono">DOMAINS</div>
+          <div class="skill-group-items">Mechanism design · medical devices · automation &amp; controls</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="wrap">
+  <footer>
+    <span class="footer-note">Last updated Sept 2026</span>
+    <a class="resume-link" href="resume.pdf">Download résumé</a>
+  </footer>
+</div>
+
+</body>
+</html>
