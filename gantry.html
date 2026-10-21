@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Spot Welder Gantry System — Varun Sureka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap wrap-wide">
+  <a class="case-back mono" href="index.html">← Back to portfolio</a>
+
+  <div class="case-header">
+    <h1 class="case-title">Capstone Project: Automated Spot Welder Gantry System</h1>
+    <div class="case-tags">
+      <span class="case-tag">Spring 2026</span>
+      <span class="case-tag">Best Overall Project</span>
+      <span class="case-tag">SolidWorks, MATLAB</span>
+    </div>
+  </div>
+
+  <figure class="case-hero-figure">
+  <div class="case-hero">
+    <video controls preload="metadata" playsinline poster="assets/gantry/poster.jpg">
+      <source src="assets/gantry/gantry-system-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <figcaption class="schematic-caption">Full System Demonstration</figcaption>
+</figure>
+
+  <div class="case-section">
+  <div class="section-title-wrap"><div class="section-title">Overview</div><div class="rule"></div></div>
+  <div class="case-cols">
+
+    <div class="case-card">
+      <h3 class="case-card-title">Background</h3>
+      <ul>
+        <li><b>Market Gap:</b> Current spot welding options force a tradeoff between cheap handheld units ($170–$280) that rely on manual probe placement and industrial CNC systems ($2,000–$5,000+) that are out of reach for DIY builders, makerspaces, and university engineering teams.</li>
+        <li><b>User Frustrations:</b> Survey data from target users revealed that 91.7% currently rely on handheld welders, with 75% reporting poor weld consistency/alignment and 50% citing manual fatigue.</li>
+        <li><b>Objective:</b> Develop a $1,000 automated gantry system providing sub-millimeter precision and hands-free pattern execution for repetitive weld sequences.</li>
+      </ul>
+    </div>
+
+    <div class="case-card">
+      <h3 class="case-card-title">Approach</h3>
+      <ul>
+        <li><b>Concept Selection:</b> Evaluated four system concepts using a Pugh screening matrix. Selected the Cartesian gantry concept due to improved controllability, reduced cost, and manufacturing simplicity.</li>
+        <li><b>Hardware Architecture:</b> 2020 aluminum frame, NEMA 17 stepper motors (XY-axis is belt-driven, Z-axis is a dual lead-screw), and load cell to sense probe contact forces.</li>
+        <li><b>Controls & Software:</b> Used an Arduino (GRBL) and Raspberry Pi 5 to handle Xbox controller input, live camera targeting, load cell Z-axis contact force sensing, and waypoint storage/replay for automated weld sequences.</li>
+      </ul>
+    </div>
+
+    <div class="case-card">
+      <h3 class="case-card-title">Target Specifications</h3>
+      <ul>
+        <li><b>Budget:</b> $1,000</li>
+        <li><b>Workspace Size:</b> 12×12"</li>
+        <li><b>Positional Accuracy:</b> ±0.25mm XY tolerance.</li>
+        <li><b>Execution Speed:</b> &lt;10s from command to weld.</li>
+        <li><b>Automation & Targeting:</b> Real-time top-down camera targeting and multi-point weld pattern storage/replay.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="case-section">
+  <div class="section-title-wrap"><div class="section-title">Engineering Analysis</div><div class="rule"></div></div>
+  <div class="case-cols case-cols-2">
+    <div class="case-card-figs">
+        <figure class="schematic-figure">
+          <img src="assets/gantry/x_axis motor simulation.png" alt="X Axis Motor Simulation">
+          <figcaption class="schematic-caption">Simulated X-Axis Motor Simulation</figcaption>
+        </figure>
+        <figure class="schematic-figure">
+          <img src="assets/gantry/y_axis motor simulation.png" alt="Y Axis Motor Simulation">
+          <figcaption class="schematic-caption">Simulated Y-Axis Motor Simulation</figcaption>
+        </figure>
+      </div>
+    <div class="case-card-figs">
+        <figure class="schematic-figure">
+          <img src="assets/gantry/vm-stress.png" alt="Von Mises stress on Z-axis bracket">
+          <figcaption class="schematic-caption">Von Mises Stress Analysis</figcaption>
+        </figure>
+        <figure class="schematic-figure">
+          <img src="assets/gantry/deflection.png" alt="Bracket deflection under load">
+          <figcaption class="schematic-caption">Max Deflection: 0.00005 mm</figcaption>
+        </figure>
+      </div>
+    <div class="case-card case-card-lg">
+      <h3 class="case-card-title">Motor Sizing</h3>
+      <ul>
+        <li><b>MATLAB Simulation Model:</b> Takes the torque-speed curve of a candidate motor and evaluates it against key parameters such as the system's moving mass, travel distance, maximum acceleration, and target velocity (all taken from target specifications), to determine if the motor's output capability is sufficient to meet our motion profile.</li>
+        <li><b>Motor Selection:</b> Selected NEMA 17 1.5A 45Ncm stepper motors for the XY-axes, and NEMA 17 0.4A 26Ncm stepper motors for the Z-axis. These motors met our motion requirements while fitting within our budget and providing a small safety margin within the torque curve.</li>
+        <li><b>Hardware Validation:</b> Physical testing successfully validated the model, with a measured average travel time of 2.31 seconds compared to the simulated 2.322 seconds for a 200mm commanded distance.</li>
+      </ul>
+    </div>
+
+    <div class="case-card case-card-lg">
+      <h3 class="case-card-title">Z-Axis Motor Bracket FEA Validation</h3>
+      <ul>
+        <li><b>Identified Failure Mode:</b> Any deformation under load of the motor bracket could cause the two Z motors to fall out of sync if the deflection causes once motor to advance one full step before the other (0.04mm).</li>
+        <li><b>Loading Conditions:</b>  Worst-case scenario of 1.6 kg of mass moving at 0.15 m/s². Motor brackets are manufactured from 304 stainless steel.</li>
+        <li><b>Stress Analysis:</b> Peak stress is approximately two orders of magnitude below the material's yield strength, indicating no risk of permanent deformation..</li>
+        <li><b>Deflection Analysis:</b> Maximum deflection of 0.00005 mm, which is three orders of magnitude below the motor step size.</li>
+        <li><b>Conclusion:</b>  Motor bracket deformation will have no meaningful effect on Z-axis synchronization and the mounting hardware is sufficient for this application.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="case-section">
+  <div class="section-title-wrap"><div class="section-title">Design for Manufacturing and Proposed Mass-Manufacturing Alternatives</div><div class="rule"></div></div>
+  <div class="case-cols case-cols-2">
+    <div class="case-card-figs">
+        <figure class="schematic-figure" style="margin: 0; height: 100%;">
+          <img src="assets/gantry/bent sheet metal.png" alt="Z-axis Motor Mount Sheet Metal Bracket (304SS) - Bent" style="width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+          <figcaption class="schematic-caption">Z-axis Motor Mount Sheet Metal Bracket (304SS) - Bent</figcaption>
+        </figure>
+        <figure class="schematic-figure" style="margin: 0; height: 100%;">
+          <img src="assets/gantry/sheet metal.png" alt="Z-axis Motor Mount Sheet Metal Bracket (304SS) - Flat Pattern" style="width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+          <figcaption class="schematic-caption">Z-axis Motor Mount Sheet Metal Bracket (304SS) - Flat Pattern</figcaption>
+        </figure>
+      </div>
+    <div class="case-card case-card-lg" style="height: 100%;">
+      <h3 class="case-card-title">Bent Sheet Metal</h3>
+      <ul>
+        <li>Utilized sheet metal bending to create the motor mounting brackets due to the high cost-to-strength ratio while keeping the overall profile of the part small.</li>
+        <li>Some features for manufacturing include clearances from bent faces to edges and minimum hole to edge distances. </li>
+        <li><b>Proposed Mass-Manufacturing Process:</b> These brackets where bent on a manual sheet metal brake. The industry standard for mass manufacturing this type of geometry is a press and die, which would reduce the per-unit cost from upwards of $20/pc to cents.</li>
+      </ul>
+    </div>
+    
+    <div class="case-card case-card-lg" style="margin-top: 48px;">
+      <h3 class="case-card-title">3D Printed Parts</h3>
+      <ul>
+        <li>Many supporting parts and key components were fabricated via FDM 3D printing. Some examples include the toolhead, load-cell interface, belt clamps, chain mounts, and cable guides.</li>
+        <li><b>Proposed Mass-Manufacturing Process:</b> The most reasonable process would be injection molding. However, most components would require major DFM changes. Injection molding enables the use ofa wider range of materials, many of which are much more performant than the plastics available in 3D-printing, and would significantly reduce the per-unit cost.</li>
+      </ul>
+    </div>
+    <div class="case-card-figs">
+        <figure class="schematic-figure" style="margin: 0; height: 100%;">
+          <img src="assets/gantry/toolhead.png" alt="Toolhead (FDM)" style="width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+          <figcaption class="schematic-caption">Toolhead (FDM)</figcaption>
+        </figure>
+        <figure class="schematic-figure" style="margin: 0; height: 100%;">
+          <img src="assets/gantry/lead screw interface.png" alt="Lead Screw Interface (FDM)" style="width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+          <figcaption class="schematic-caption">Lead Screw Interface (FDM)</figcaption>
+        </figure>
+      </div>
+  </div>
+</div>
+
+<div class="case-section">
+  <div class="section-title-wrap"><div class="section-title">Results</div><div class="rule"></div></div>
+  
+  <div class="case-cols case-cols-2">
+    
+    <div>
+      <div class="case-card case-card-lg" style="height: 100%;">
+        <h3 class="case-card-title">System Performance</h3>
+        <ul>
+          <li><b>Positional Accuracy:</b> 15 trials averaged an absolute error of 0.15mm. There was a trend of increasing error at longer commanded distances, which suggests minor accumulated positioning error due to belt stretch or micro-stepping loss over longer moves.</li>
+          <li><b>Outlier Analysis:</b> Trial 9 (-0.8mm) fell outside the ±0.25mm target range. The substantial error was likely due to belt-slip caused by commanding the system to move a large distance at maximum acceleration. In the future, this positional error could be resolved by incorporating closed-loop encoder feedback and stiffer belts. 
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <figure class="schematic-figure" style="margin: 0; height: 100%;">
+        <img src="assets/gantry/XY motor testing.png" alt="XY Positional Accuracy Test Data" style="width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption">XY Positional Accuracy Test Data</figcaption>
+      </figure>
+    </div>
+
+  </div>
+
+  <div class="case-cols case-cols-2" style="margin-top: 48px;">
+    
+    <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+      <video controls muted loop playsinline preload="metadata" style="width: 100%; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+        <!-- Replace with your actual video source -->
+        <source src="assets/gantry/weld close up.mp4" type="video/mp4">
+      </video>
+      <figcaption class="schematic-caption">Close-up of Weld Execution</figcaption>
+    </figure>
+     <div style="position: relative;">
+    <figure class="schematic-figure" style="margin: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column;">
+      <img src="assets/gantry/weld closeup.png" alt="Completed Welds on Test Piece" style="width: 100%; flex-grow: 1; min-height: 0; object-fit: cover; display: block; border: 1px solid var(--line-strong);">
+      <figcaption class="schematic-caption">Completed Welds on Test Piece</figcaption>
+    </figure>
+    </div>
+  </div>
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">My Role</div><div class="rule"></div></div>
+    <div class="case-role-box">
+      <p style="margin:0 0 10px; color: var(--ink);">Team Size: 4 Engineers&nbsp;|&nbsp;My Contributions: </p>
+      <ul class="entry-bullets">
+        <li><b>Mechanical Design:</b> Designed gantry frame, XYZ-axis motor mounts, belt routing, and tensioning systems.</li>
+        <li><b>Software Integration:</b> Wrote custom video streaming code to enable the live digital crosshair targeting system.</li>
+        <li><b>Testing & Validation:</b> Wrote motor simulation script to validate motor sizing. Conducted positional accuracy testing and analysis.</li>
+        <li><b>Systems Engineering:</b> Conducted interviews and formally defined stakeholder needs, target specifications, and the detailed design architecture.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="case-footer-nav">
+    <a class="case-link" href="index.html">← Back to portfolio</a>
+  </div>
+</body>
+</html>

@@ -3,94 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Varun Sureka — Mechanical Engineering Portfolio</title>
+<title>Varun Sureka — Engineering Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #EFEAE1;
-    --paper-raised: #F6F2EA;
-    --ink: #241F19;
-    --graphite: #6E655A;
-    --blueprint: #8A5A28;
-    --signal: #B23A2E;
-    --line: #D8D0C2;
-    --line-strong: #B9AE9C;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
-  a { color: inherit; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
-  .wrap { max-width: 900px; margin: 0 auto; padding: 0 32px; }
-  .mono { font-family: 'IBM Plex Mono', monospace; }
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 
-  header { padding: 48px 0 32px; border-bottom: 1px solid var(--line-strong); }
-  .title-block { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
-  h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.9rem, 4.5vw, 2.5rem); margin: 0 0 4px; letter-spacing: -0.01em; }
-  .degree-line { color: var(--graphite); font-size: 0.92rem; }
-  .meta-strip { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--graphite); line-height: 1.9; }
-  .meta-strip a { text-decoration: none; border-bottom: 1px solid var(--line-strong); }
-  .meta-strip a:hover { border-color: var(--blueprint); color: var(--blueprint); }
-
-  /* --- index / table of contents --- */
-  .index-wrap { padding: 28px 0; border-bottom: 1px solid var(--line-strong); }
-  .index-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--graphite); margin-bottom: 14px; }
-  .index-row { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--line); text-decoration: none; }
-  .index-row:first-of-type { border-top: none; }
-  .index-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--blueprint); }
-  .index-title { font-size: 0.94rem; color: var(--ink); }
-  .index-title span { color: var(--graphite); font-size: 0.85rem; }
-  .index-headline { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--signal); text-align: right; white-space: nowrap; }
-
-  .section-title-wrap { padding: 44px 0 20px; }
-  .section-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin: 0 0 10px; }
-  .section-title-wrap .rule { height: 1px; background: var(--ink); }
-
-  /* --- experience: single-column, bullet-forward --- */
-  .exp-entry { padding: 30px 0; border-bottom: 1px solid var(--line); }
-  .exp-entry:last-of-type { border-bottom: none; }
-  .exp-head { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; margin-bottom: 2px; }
-  .exp-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.25rem; margin: 0; }
-  .exp-duration { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--graphite); white-space: nowrap; }
-  .exp-org { color: var(--blueprint); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; margin-bottom: 14px; }
-  .exp-bullets { margin: 0; padding-left: 18px; }
-  .exp-bullets li { margin-bottom: 8px; color: var(--ink); }
-  .exp-bullets li:last-child { margin-bottom: 0; }
-
-  /* --- projects: two-column with schematic --- */
-  .entry { padding: 36px 0; border-bottom: 1px solid var(--line); }
-  .entry:last-of-type { border-bottom: none; }
-  .entry-head { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; margin-bottom: 2px; }
-  .entry-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.25rem; margin: 0; }
-  .entry-duration { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--graphite); white-space: nowrap; }
-  .entry-org { color: var(--blueprint); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; margin-bottom: 16px; }
-  .entry-body { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 30px; align-items: start; }
-  @media (max-width: 720px) { .entry-body { grid-template-columns: 1fr; } .index-row { grid-template-columns: 1fr; gap: 3px; } .index-headline { text-align: left; } }
-  .schematic { border: 1px solid var(--line-strong); background: var(--paper-raised); aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; position: relative; }
-  .schematic svg { width: 78%; height: 78%; }
-  .schematic-label { position: absolute; bottom: 8px; left: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--graphite); }
-  .entry-bullets { margin: 0; padding-left: 18px; }
-  .entry-bullets li { margin-bottom: 8px; color: var(--ink); font-size: 0.96rem; }
-  .entry-bullets li:last-child { margin-bottom: 0; }
-
-  .leadership-entry { padding: 24px 0; }
-  .leadership-head { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; margin-bottom: 4px; }
-  .leadership-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.1rem; margin: 0; }
-  .leadership-org { color: var(--graphite); font-size: 0.92rem; }
-
-  .skills-section { padding: 32px 0 48px; }
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
-  .skill-group-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--blueprint); margin-bottom: 8px; }
-  .skill-group-items { color: var(--ink); font-size: 0.95rem; line-height: 1.8; }
-
-  footer { padding: 40px 0 64px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-  .footer-note { color: var(--graphite); font-size: 0.85rem; font-family: 'IBM Plex Mono', monospace; }
-  .resume-link { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--ink); border: 1px solid var(--ink); padding: 10px 20px; display: inline-block; transition: background 0.15s ease, color 0.15s ease; }
-  .resume-link:hover { background: var(--ink); color: var(--paper); }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .resume-link { transition: none; } }
-</style>
 </head>
 <body>
 
@@ -98,56 +16,81 @@
   <header>
     <div class="title-block">
       <div>
-        <h1>Varun Sureka</h1>
-        <div class="degree-line">MS Mechanical Engineering, Carnegie Mellon (2027) · BS Mechanical Engineering, CMU (2026), GPA 3.8</div>
-      </div>
-      <div class="meta-strip">
-        630-448-2786<br>
-        <a href="mailto:vsureka@andrew.cmu.edu">vsureka@andrew.cmu.edu</a><br>
-        <a href="https://linkedin.com/in/varunsureka">linkedin.com/in/varunsureka</a><br>
-        <a href="https://github.com/varunsureka24">github.com/varunsureka24</a>
+        <h1>Varun Sureka - Engineering Portfolio</h1>
       </div>
     </div>
   </header>
 
+  <div class="edu-wrap">
+    <div class="edu-row"><span class="edu-school">Carnegie Mellon University</span><span class="edu-location mono">Pittsburgh, PA</span></div>
+    <div class="edu-row"><span class="edu-degree">Master of Science in Mechanical Engineering</span><span class="edu-dates mono">Aug. 2026 – May 2027</span></div>
+    <div class="edu-row"><span class="edu-degree">Bachelor of Science in Mechanical Engineering, GPA: 3.8/4.0</span><span class="edu-dates mono">May 2026</span></div>
+  </div>
+
   <div class="index-wrap">
-    <div class="index-label">Index</div>
-    <a class="index-row" href="#jnj"><span class="index-tag mono">EXP</span><span class="index-title">Mechanical Engineering Intern <span>— J&amp;J MedTech</span></span><span class="index-headline">1×1×1" pump, 0–150 cP</span></a>
-    <a class="index-row" href="#ctl"><span class="index-tag mono">EXP</span><span class="index-title">Mechanical Engineering Co-Op <span>— CTL Amedica</span></span><span class="index-headline">−10% mass, cannulated</span></a>
-    <a class="index-row" href="#gantry"><span class="index-tag mono">PROJ</span><span class="index-title">Spot Welder Gantry System <span>— Best Overall Project</span></span><span class="index-headline">±0.15mm XY tolerance</span></a>
-    <a class="index-row" href="#fsae"><span class="index-tag mono">PROJ</span><span class="index-title">Inverter Repackage — CMR FSAE <span>— Team Lead</span></span><span class="index-headline">−5°C, −50% mass</span></a>
-    <a class="index-row" href="#franka"><span class="index-tag mono">PROJ</span><span class="index-title">Whiteboard Drawing, Franka Arm <span>— Best Project</span></span><span class="index-headline">7-DOF motion control</span></a>
-    <a class="index-row" href="#slam"><span class="index-tag mono">PROJ</span><span class="index-title">SLAM: Particle Filter MCL</span><span class="index-headline">adaptive resampling</span></a>
+    <div class="index-label">Table of Contents</div>
+
+    <div class="index-group-label">Work Experience</div>
+    <a class="index-row" href="#jnj"><span class="index-title">Mechanical Engineering Intern - Strategic Robotics R&amp;D | <em>SolidWorks</em></span><span class="index-subtitle">J&amp;J MedTech</span></a>
+    <a class="index-row" href="#ctl"><span class="index-title">Mechanical Engineering Co-Op | <em>PTC Creo, Fusion 360</em></span><span class="index-subtitle">CTL Amedica</span></a>
+    
+    <div class="index-group-label">Projects</div>
+    <a class="index-row" href="gantry.html"><span class="index-title"> Capstone Project: Automated Spot Welder Gantry System | <em>SolidWorks, MATLAB </em></span></span><span class="index-subtitle">Spring 2026</span></a>
+    <a class="index-row" href="franka.html"><span class="index-title">Whiteboard Drawing with Franka Arm | <em> Python, Git, FrankaAPI </em></span><span class="index-subtitle">Fall 2024</span></a>
+    <a class="index-row" href="slam.html"><span class="index-title">SLAM Project: Particle Filtering Using Monte Carlo Localization | <em>Python, Git </em></span><span class="index-subtitle">Spring 2025</span></a>
+    <a class="index-row" href="fsae.html"><span class="index-title">Inverter Repackage - Carnegie Mellon Racing (FSAE) | <em> SolidWorks </em> </span><span class="index-subtitle">May 2023</span></a>
   </div>
 </div>
 
 <main>
 
   <div class="wrap">
-    <div class="section-title-wrap"><div class="section-title">Experience</div><div class="rule"></div></div>
-  </div>
+  <div class="section-title-wrap"><div class="section-title">Work Experience</div><div class="rule"></div></div>
+</div>
 
-  <div class="wrap">
-    <section class="exp-entry" id="jnj">
-      <div class="exp-head"><h2 class="exp-title">Mechanical Engineering Intern — Strategic Robotics R&amp;D</h2><span class="exp-duration mono">May – Aug 2026</span></div>
-      <div class="exp-org">Johnson &amp; Johnson MedTech · SolidWorks · Santa Clara, CA</div>
-      <ul class="exp-bullets">
-        <li>Prototyped a robotic pump capable of precisely dosing 8 fluids spanning 0–150 cP, including shear-thinning fluids, packaged within a 1×1×1" form factor.</li>
+<div class="wrap">
+  <section class="exp-entry" id="jnj">
+    <div class="exp-head">
+      <h2 class="exp-title">Mechanical Engineering Intern — Strategic Robotics R&amp;D</h2>
+      <div class="exp-meta"><span class="exp-duration mono">May – Aug 2026</span><span class="exp-location mono">Santa Clara, CA</span></div>
+    </div>
+    <div class="exp-org">Johnson &amp; Johnson MedTech · SolidWorks</div>
+    <div class="entry-body">
+      <figure class="schematic-figure">
+        <div class="schematic">
+          <img src="assets/work experience/ottava.webp" alt="Ottava Robotic Surgical System">
+        </div>
+        <figcaption class="schematic-caption">Ottava Robotic Surgical System</figcaption>
+      </figure>
+      <ul class="entry-bullets">
+        <li>Prototyped a robotic pump capable of precisely dosing 8 fluids whose viscosities spanned 0–150 cP, including shear-thinning fluids, packaged within a 1×1×1" form factor.</li>
         <li>Validated pump headloss and flow rate via hand calculations, comparing predictions against benchtop testing and off-the-shelf alternatives to inform pump selection.</li>
         <li>Designed custom test fixtures to benchmark off-the-shelf instruments; authored test protocols and reports informing development of DIRs and SSSs for next-gen instrumentation.</li>
       </ul>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>
 
   <div class="wrap">
     <section class="exp-entry" id="ctl">
-      <div class="exp-head"><h2 class="exp-title">Mechanical Engineering Co-Op</h2><span class="exp-duration mono">May – Dec 2025</span></div>
-      <div class="exp-org">CTL Amedica · PTC Creo, Fusion 360 · Philadelphia, PA</div>
-      <ul class="exp-bullets">
-        <li>Redesigned a line of paddle distractors per surgeon feedback, adding cannulation and reducing overall mass by 10%.</li>
-        <li>Performed mechanical validation and verification to ensure instruments could withstand torsional and shear loading conditions; designed test fixtures and wrote engineering test protocols and reports documenting the validation process.</li>
-        <li>Supported sustaining engineering efforts by updating CAD models, drawings, and component designs for existing instrumentation, following standard design change and document control processes.</li>
-      </ul>
+      <div class="exp-head">
+        <h2 class="exp-title">Mechanical Engineering Co-Op</h2>
+        <div class="exp-meta"><span class="exp-duration mono">May – Dec 2025</span><span class="exp-location mono">Philadelphia, PA</span></div>
+      </div>
+      <div class="exp-org">CTL Amedica · PTC Creo, Fusion 360</div>
+      <div class="entry-body">
+        <figure class="schematic-figure">
+        <div class="schematic">
+          <img src="assets/work experience/paddle distractor.png" alt="Paddle Distractor">
+        </div>
+        <figcaption class="schematic-caption">Paddle Distractor</figcaption>
+      </figure>
+        <ul class="entry-bullets">
+          <li>Redesigned a line of paddle distractors per surgeon feedback, adding cannulation and reducing overall mass by 10%.</li>
+          <li>Performed mechanical validation and verification to ensure instruments could withstand torsional and shear loading conditions; designed test fixtures and wrote engineering test protocols and reports documenting the validation process.</li>
+          <li>Supported sustaining engineering efforts by updating CAD models, drawings, and component designs for existing instrumentation, following standard design change and document control processes.</li>
+        </ul>
+      </div>
     </section>
   </div>
 
@@ -160,47 +103,18 @@
       <div class="entry-head"><h2 class="entry-name">Automated Spot Welder Gantry System</h2><span class="entry-duration mono">Spring 2026</span></div>
       <div class="entry-org">SolidWorks, MATLAB · Awarded Best Overall Project</div>
       <div class="entry-body">
-        <div class="schematic">
-          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="20" width="160" height="110" stroke="#241F19" stroke-width="1.5"/>
-            <line x1="20" y1="45" x2="180" y2="45" stroke="#8A5A28" stroke-width="1.5"/>
-            <rect x="70" y="45" width="10" height="70" fill="#8A5A28"/>
-            <circle cx="75" cy="115" r="5" stroke="#B23A2E" stroke-width="1.5"/>
-            <line x1="20" y1="20" x2="20" y2="130" stroke="#6E655A" stroke-width="1"/>
-            <line x1="180" y1="20" x2="180" y2="130" stroke="#6E655A" stroke-width="1"/>
-          </svg>
-          <span class="schematic-label">XY GANTRY · replace with CAD render</span>
-        </div>
+        <figure class="schematic-figure">
+          <div class="schematic">
+            <img src="assets/gantry/gantry front view.png" alt="Spot Welder Gantry System">
+          </div>
+          <figcaption class="schematic-caption">Spot Welder Gantry System</figcaption>
+        </figure>
         <ul class="entry-bullets">
           <li>Engineered a 3-axis CNC gantry executing complex weld sequences within a ±0.15mm XY positional tolerance.</li>
           <li>Developed MATLAB torque-speed simulations to size stepper motors, validating predicted time-to-position within 0.01s across 15+ trials.</li>
           <li>Designed a controller-driven interface supporting manual jog control, live waypoint recording, and automated multi-point path replay for repeatable hands-free welding.</li>
         </ul>
-      </div>
-    </section>
-  </div>
-
-  <div class="wrap">
-    <section class="entry" id="fsae">
-      <div class="entry-head"><h2 class="entry-name">Inverter Repackage System — CMR FSAE</h2><span class="entry-duration mono">May 2023 – May 2024</span></div>
-      <div class="entry-org">SolidWorks · Team Lead</div>
-      <div class="entry-body">
-        <div class="schematic">
-          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="55" y="45" width="90" height="55" stroke="#241F19" stroke-width="1.5"/>
-            <line x1="65" y1="55" x2="135" y2="55" stroke="#8A5A28" stroke-width="1"/>
-            <line x1="65" y1="65" x2="135" y2="65" stroke="#8A5A28" stroke-width="1"/>
-            <line x1="65" y1="75" x2="135" y2="75" stroke="#8A5A28" stroke-width="1"/>
-            <line x1="65" y1="85" x2="135" y2="85" stroke="#8A5A28" stroke-width="1"/>
-            <path d="M40 100 L100 130 L160 100" stroke="#B23A2E" stroke-width="1.2"/>
-          </svg>
-          <span class="schematic-label">COLDPLATE · replace with CAD render</span>
-        </div>
-        <ul class="entry-bullets">
-          <li>Led mechanical design and simulation of a liquid coldplate for EV inverter cooling, reducing surface temperature differential by 5°C.</li>
-          <li>Achieved a 50% mass reduction (1500g), improving heat transfer and mechanical performance.</li>
-          <li>Performed thermal and structural validation using SimScale and Ansys across varied loads and flow rates.</li>
-        </ul>
+        <a class="case-link" href="gantry.html">Click Here to Learn More!</a>
       </div>
     </section>
   </div>
@@ -210,19 +124,17 @@
       <div class="entry-head"><h2 class="entry-name">Whiteboard Drawing with Franka Arm</h2><span class="entry-duration mono">Fall 2024</span></div>
       <div class="entry-org">Python, Git, FrankaAPI · Awarded Best Project</div>
       <div class="entry-body">
-        <div class="schematic">
-          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="30" y1="120" x2="90" y2="60" stroke="#241F19" stroke-width="2"/>
-            <line x1="90" y1="60" x2="150" y2="90" stroke="#241F19" stroke-width="2"/>
-            <circle cx="150" cy="90" r="4" fill="#B23A2E"/>
-            <path d="M150 90 C160 70, 175 65, 180 50" stroke="#8A5A28" stroke-width="1" stroke-dasharray="3 2"/>
-          </svg>
-          <span class="schematic-label">7-DOF ARM PATH · replace with photo</span>
-        </div>
+        <figure class="schematic-figure">
+          <div class="schematic">
+            <img src="assets/rkd/franka arm.webp" alt="franka arm">
+          </div>
+          <figcaption class="Franka Emika Robotic Arm"></figcaption>
+        </figure>
         <ul class="entry-bullets">
           <li>Implemented a motion control system on a 7-DOF Franka Emika arm to draw detailed whiteboard images with continuous-line planning.</li>
           <li>Developed velocity profiles and motion constraints for smooth, collision-free trajectories.</li>
         </ul>
+        <a class="case-link" href="franka.html">Click Here to Learn More!</a>
       </div>
     </section>
   </div>
@@ -232,19 +144,37 @@
       <div class="entry-head"><h2 class="entry-name">SLAM Project: Particle Filtering Using Monte Carlo Localization</h2><span class="entry-duration mono">Spring 2025</span></div>
       <div class="entry-org">Python, Git</div>
       <div class="entry-body">
-        <div class="schematic">
-          <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="30" width="140" height="90" stroke="#241F19" stroke-width="1.5"/>
-            <circle cx="70" cy="60" r="2.5" fill="#8A5A28"/><circle cx="90" cy="75" r="2.5" fill="#8A5A28"/>
-            <circle cx="110" cy="55" r="2.5" fill="#8A5A28"/><circle cx="130" cy="90" r="2.5" fill="#8A5A28"/>
-            <circle cx="100" cy="100" r="2.5" fill="#8A5A28"/><circle cx="100" cy="75" r="6" stroke="#B23A2E" stroke-width="1.2"/>
-          </svg>
-          <span class="schematic-label">PARTICLE BELIEF MAP · replace with visualization</span>
-        </div>
+        <figure class="schematic-figure">
+          <div class="schematic">
+            <img src="assets/slam/3500_particle_example.png" alt="">
+          </div>
+          <figcaption class="schematic-caption">Initial Belief Distribution</figcaption>
+        </figure>
         <ul class="entry-bullets">
           <li>Built a particle filter with adaptive resampling to localize a mobile robot within a known occupancy grid using Monte Carlo methods under noisy motion and sensor data.</li>
           <li>Modeled probabilistic odometry and range sensor measurements, dynamically adjusting particle count based on uncertainty, and visualized real-time belief evolution in Matplotlib.</li>
         </ul>
+        <a class="case-link" href="slam.html">Click Here to Learn More!</a>
+      </div>
+    </section>
+  </div>
+  <div class="wrap">
+    <section class="entry" id="fsae">
+      <div class="entry-head"><h2 class="entry-name">Inverter Repackage System — CMR FSAE</h2><span class="entry-duration mono">May 2023</span></div>
+      <div class="entry-org">SolidWorks · System Lead</div>
+      <div class="entry-body">
+        <figure class="schematic-figure">
+        <div class="schematic">
+          <img src="assets/fsae/iso.png" alt="Inverter Coldplate Redesign">
+        </div>
+        <figcaption class="schematic-caption">Inverter Coldplate Redesign</figcaption>
+      </figure>
+        <ul class="entry-bullets">
+          <li>Led mechanical design and simulation of a liquid coldplate for EV inverter cooling, reducing surface temperature differential by 5°C.</li>
+          <li>Achieved a 50% mass reduction (1500g), improving heat transfer and mechanical performance.</li>
+          <li>Performed thermal and structural validation using SimScale and Ansys across varied loads and flow rates.</li>
+        </ul>
+        <a class="case-link" href="fsae.html">Click Here to Learn More!</a>
       </div>
     </section>
   </div>

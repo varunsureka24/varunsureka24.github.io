@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whiteboard Drawing with Franka Arm — Varun Sureka</title>
+<!-- Copy the font <link> from your gantry.html here so the fonts match -->
+<link rel="stylesheet" href="styles.css">
+<!--
+MEDIA to add in assets/franka/:
+  trapezoidal_profile.png   from docs/ in your repo (trapezoidal vs S-curve diagram)
+The demo video is embedded from YouTube, so it needs no local file.
+-->
+</head>
+<body>
+
+<div class="wrap wrap-wide">
+  <a class="case-back mono" href="index.html">← Back to portfolio</a>
+
+  <div class="case-header">
+    <h1 class="case-title">Whiteboard Drawing with Franka Arm</h1>
+    <div class="case-tags">
+      <span class="case-tag">Fall 2024</span>
+      <span class="case-tag">RKD Capstone</span>
+      <span class="case-tag">Best Project</span>
+      <span class="case-tag">Python, Git, FrankaAPI</span>
+    </div>
+  </div>
+
+  <figure class="case-hero-figure">
+    <div class="case-hero">
+      <iframe src="https://www.youtube.com/embed/k4Xcv1jUgHI" title="Franka arm whiteboard drawing demo" style="width:100%; height:100%; border:0;" loading="lazy" allowfullscreen></iframe>
+    </div>
+    <figcaption class="schematic-caption">Franka Emika Panda picking up a pen, drawing on the whiteboard, and dropping the pen in the bin</figcaption>
+  </figure>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">The Task</div><div class="rule"></div></div>
+    <div class="case-prose">
+      <p>Program a 7-DOF Franka Emika Panda to work autonomously: pick up a pen, carry it to a whiteboard, draw lines and curves, and place the pen in a drop bin. The robot had to complete the full sequence three times while adapting to different pen locations, whiteboard positions, and orientations.</p>
+    </div>
+    <div class="specs">
+      <div class="spec"><span class="spec-value mono">7-DOF</span><span class="spec-label">Franka Emika Panda arm</span></div>
+      <div class="spec"><span class="spec-value mono">3×</span><span class="spec-label">full pick, draw, drop sequences required</span></div>
+      <div class="spec"><span class="spec-value mono">Best Project</span><span class="spec-label">awarded in the course</span></div>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">How It Works</div><div class="rule"></div></div>
+    <div class="case-cols">
+
+      <div class="case-card">
+        <h3 class="case-card-title">Kinematics</h3>
+        <ul>
+          <li>Forward kinematics built from DH parameters</li>
+          <li>Inverse kinematics solved by gradient descent, which converges quickly and places the end effector accurately</li>
+        </ul>
+      </div>
+
+      <div class="case-card">
+        <h3 class="case-card-title">Motion Planning</h3>
+        <ul>
+          <li>Joint-space and Cartesian-space interpolation for smooth, precise drawing motions</li>
+          <li>S-curve time parameterization for gradual acceleration and deceleration</li>
+          <li>Lines and arbitrary curves traced while the pen stays in contact with the board</li>
+        </ul>
+      </div>
+
+      <div class="case-card">
+        <h3 class="case-card-title">Safety and Recovery</h3>
+        <ul>
+          <li>Collision avoidance around the table, pen holder, and whiteboard</li>
+          <li>Adaptive placement for varying pen and board positions</li>
+          <li>Human-in-the-loop input to recover from a failed grasp or misalignment</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">S-Curve Velocity Profile</div><div class="rule"></div></div>
+    <div class="case-media-row">
+      <div class="case-prose">
+        <p>A standard trapezoidal velocity profile has instantaneous jumps in acceleration where it changes segments. Those jumps raise the torque demand on the motors.</p>
+        <p>To fix that, I varied the time parameter passed to the interpolation function smoothly, so acceleration ramps up and down gradually. That keeps acceleration and jerk within feasible limits and makes the trajectory more stable.</p>
+      </div>
+      <figure class="schematic-figure">
+        <img src="assets/franka/trapezoidal_profile.png" alt="Trapezoidal and S-curve velocity profiles compared">
+        <figcaption class="schematic-caption">Trapezoidal profile versus the S-curve</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">My Role</div><div class="rule"></div></div>
+    <div class="case-role-box">
+      <ul class="entry-bullets">
+        <li>Implemented the motion control system for continuous-line drawing on the whiteboard</li>
+        <li>Developed the velocity profiles and motion constraints for smooth, collision-free trajectories</li>
+      </ul>
+    </div>
+    <div class="case-placeholder-note">This was a team project. Add which pieces you personally owned, such as IK, the S-curve profile, or collision avoidance.</div>
+  </div>
+
+  <div class="case-footer-nav">
+    <a class="case-link" href="index.html">← Back to portfolio</a>
+  </div>
+
+</div>
+
+</body>
+</html>

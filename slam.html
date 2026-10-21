@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLAM Project: Particle Filtering Using Monte Carlo Localization — Varun Sureka</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap wrap-wide">
+  <a class="case-back mono" href="index.html">← Back to portfolio</a>
+
+  <div class="case-header">
+    <h1 class="case-title">SLAM Project: Particle Filtering Using Monte Carlo Localization</h1>
+    <div class="case-tags">
+      <span class="case-tag">Spring 2025</span>
+      <span class="case-tag">16-833 Robot Localization and Mapping</span>
+      <span class="case-tag">Python, Git</span>
+    </div>
+  </div>
+
+  <figure class="case-hero-figure">
+    <div class="case-hero">
+      <video controls muted loop playsinline preload="metadata" style="object-fit: contain;">
+        <source src="assets/slam/log1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <figcaption class="schematic-caption">Particle Convergence Using Monte Carlo Localization (Datalog 1)</figcaption>
+  </figure>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Overview</div><div class="rule"></div></div>
+   <div class="case-media-row" style="align-items: start; gap: 32px;">
+      <div class="case-prose" style="flex: 1;">
+        <p style="margin-top: 0;">Implemented a Monte Carlo Localization (MCL) system using a recursive Bayesian filter to estimate a robot's global (x, y, &theta;) pose with no initial knowledge using only odometry, LiDAR scans, and an occupancy grid map.</p>
+      </div>
+      <figure class="schematic-figure" style="margin: 0; flex: 1;">
+        <img src="assets/slam/3500_particle_example.png" style="width: 100%; height: auto; object-fit: contain; background: var(--paper-raised); border: 1px solid var(--line-strong); border-radius: 4px;" alt="3500 initial particles spread over the map's free space">
+        <figcaption class="schematic-caption" style="margin-top: 8px;">Global Initialization: 3,500 particles spread across known free space</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- SECTION 2: The Localization Pipeline -->
+<div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Monte Carlo Localization</div><div class="rule"></div></div>
+    <div class="case-cols case-steps">
+  <div class="case-card">
+    <h3 class="case-card-title">1 &middot; Prediction Step (Motion Model)</h3>
+    <ul>
+      <li>Updates the predicted particle poses based on the robot's incoming odometry data</li>
+      <li>Accounts for kinematic drift and wheel slip using probabilistic Gaussian noise</li>
+      <li>Vectorized, so all particles update in a single operation</li>
+    </ul>
+  </div>
+
+  <div class="case-card">
+    <h3 class="case-card-title">2 &middot; Correction Step (Sensor Model)</h3>
+    <ul>
+      <li>Simulates LiDAR measurements by casting 90 rays per particle against the known occupancy grid</li>
+      <li>Calculates an observation weight for each particle by comparing expected ranges to actual readings using a probabilistic beam model</li>
+    </ul>
+  </div>
+
+  <div class="case-card">
+    <h3 class="case-card-title">3 &middot; Resampling</h3>
+    <ul>
+      <li>Low-variance resampling algorithm to draw a new particle set proportional to the normalized sensor weights</li>
+      <li>Systematically removes low-probability particles and duplicates accurate ones to drive convergence onto the true pose</li>
+    </ul>
+  </div>
+</div>
+<p class="case-loop-note">↻ Repeated at every sensor update until the particle cloud converges</p>
+
+    </div>
+    
+    <div class="case-cols case-cols-2" style="margin-top: 24px;">
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/slam/motion_model_visualization.png" alt="Single particle trajectory from the motion model" style="width: 100%; height: auto; object-fit: contain; display: block; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--paper-raised);">
+        <figcaption class="schematic-caption" style="margin-top: 8px;">Step 1: Single particle trajectory drifting under motion model noise</figcaption>
+      </figure>
+
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/slam/raycast_example.png" alt="Raycast from a single particle with wall hits" style="width: 100%; height: auto; object-fit: contain; display: block; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--paper-raised);">
+        <figcaption class="schematic-caption" style="margin-top: 8px;">Step 2: Raycasting simulated LiDAR measurements against the known map</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Implementation & Optimization -->
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Implementation & Optimization</div><div class="rule"></div></div>
+    
+    <div class="case-cols case-cols-2" style="margin-bottom: 32px; align-items: stretch;">
+      
+      <div class="case-card case-card-lg" style="margin: 0;">
+        <h3 class="case-card-title">Tuning Strategy</h3>
+        <ul>
+          <li><b>Sensor Weighting:</b> Heavily weighted <i>Z<sub>hit</sub></i> (2.0) to trust LiDAR in closed spaces, kept <i>Z<sub>max</sub></i> low (0.05) due to high wall density, and maintained a high <i>Z<sub>rand</sub></i> (100) to prevent premature, incorrect convergence[cite: 10].</li>
+          <li><b>Raycast Vectorization:</b> Instead of iteratively computing ray intersections, the function generates a grid of potential intersections and evaluates them entirely in parallel[cite: 11, 12].</li>
+        </ul>
+        
+        <div style="margin-top: 24px; padding: 16px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: 4px;">
+          <h4 style="margin: 0 0 12px 0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.5px;">Final Tuned Parameters</h4>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-family: monospace; font-size: 0.9em;">
+            <div>&alpha;<sub>1-4</sub>: 0.0001</div>
+            <div>Z<sub>hit</sub>: 2.0</div>
+            <div>Z<sub>short</sub>: 0.35</div>
+            <div>Z<sub>max</sub>: 0.05</div>
+            <div>Z<sub>rand</sub>: 100</div>
+            <div>&sigma;<sub>hit</sub>: 100</div>
+            <div>&lambda;<sub>short</sub>: 0.1</div>
+            <div>Subsample: 2</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card case-card-lg" style="margin: 0;">
+        <h3 class="case-card-title">Adaptive Particle Count (Extra Credit)</h3>
+        <p style="margin-top: 0;">Implemented a dynamic decay strategy to shrink the particle set as localization confidence increases, minimizing computational load[cite: 15].</p>
+        <ul>
+          <li><b>Uncertainty Metric (Entropy):</b> Calculates the Shannon entropy of the particle weights to measure distribution uniformity[cite: 15].</li>
+          <li><b>Spread Metric (Spatial Variance):</b> Evaluates the physical clustering of particles in the state space[cite: 15].</li>
+          <li><b>Dynamic Decay:</b> The particle count is continuously scaled by <code>max(0.3, s/s<sub>max</sub>) &middot; max(0.3, &sigma;/&sigma;<sub>max</sub>)</code> and safely clamped above a minimum threshold[cite: 15].</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: Performance & Results -->
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Performance & Results</div><div class="rule"></div></div>
+    
+    <div class="specs">
+      <div class="spec"><span class="spec-value mono">Logs 1, 2, 3, 5</span><span class="spec-label">Converged globally and tracked true pose</span></div>
+      <div class="spec"><span class="spec-value mono">Log 4</span><span class="spec-label">Diverged into occupied wall space</span></div>
+      <div class="spec"><span class="spec-value mono">Generalization</span><span class="spec-label">Single parameter set succeeded across varied environments</span></div>
+    </div>
+
+    <div class="case-media-row">
+      <figure class="schematic-figure" style="margin: 0;">
+        <img src="assets/slam/log1-initial.png" alt="Log 1 initial convergence" style="width: 100%; height: auto; object-fit: contain; background: var(--paper-raised); border-radius: 4px;">
+        <figcaption class="schematic-caption">Initial convergence showing duplicate clusters due to hallway symmetry[cite: 13, 14]</figcaption>
+      </figure>
+      <figure class="schematic-figure" style="margin: 0;">
+        <img src="assets/slam/log1-final.png" alt="Log 1 final localized position" style="width: 100%; height: auto; object-fit: contain; background: var(--paper-raised); border-radius: 4px;">
+        <figcaption class="schematic-caption">Final state firmly collapsed onto the true robot location[cite: 13, 14]</figcaption>
+      </figure>
+    </div>
+
+    <div class="case-media-row">
+      <figure class="schematic-figure" style="margin: 0;">
+        <video controls muted loop playsinline preload="metadata" style="width: 100%; height: auto; object-fit: contain; border-radius: 4px;">
+          <source src="assets/slam/log2.mp4" type="video/mp4">
+        </video>
+        <figcaption class="schematic-caption">Data log 2 tracking motion successfully at 60 fps</figcaption>
+      </figure>
+      <figure class="schematic-figure" style="margin: 0;">
+        <img src="assets/slam/log4-final.png" alt="Log 4 final particles outside free space" style="width: 100%; height: auto; object-fit: contain; background: var(--paper-raised); border-radius: 4px;">
+        <figcaption class="schematic-caption">Log 4 failure state: particles tracking out of bounds[cite: 14]</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Challenges & Future Work -->
+  <div class="case-section">
+    <div class="section-title-wrap">
+      <div class="section-title">Challenges & Future Work</div>
+      <div class="rule"></div>
+    </div>
+    
+    <div class="case-cols case-cols-2" style="align-items: start; gap: 32px;">
+      
+      <!-- Challenges Column -->
+      <div style="border-left: 3px solid var(--line-strong); padding-left: 16px;">
+        <h3 style="margin-top: 0;">Failure Modes</h3>
+        <ul>
+          <li><b>Divergence in Open Spaces:</b> Log 4 failed to track, resulting in particles moving through occupied walls[cite: 14]. This is likely due to prolonged exposure to open spaces where the tuned sensor model is less deterministically informative[cite: 14].</li>
+          <li><b>Symmetric Ambiguity:</b> On logs 2 and 3, early iterations sometimes caused the filter to incorrectly cluster in symmetrical, alternate portions of the map before eventually diverging[cite: 14].</li>
+        </ul>
+      </div>
+
+      <!-- Future Work Column -->
+      <div style="border-left: 3px solid var(--line-strong); padding-left: 16px;">
+        <h3 style="margin-top: 0;">Next Steps</h3>
+        <ul>
+          <li><b>Visual Debugging:</b> Overlay the generated ray-cast map directly against the raw LiDAR data logs to visually identify where the sensor model misaligns[cite: 14].</li>
+          <li><b>Dataset-Specific Tuning:</b> Refine the sensor model parameters to handle the challenging open-space features of logs 2, 3, and 4, rather than relying on a baseline tuned entirely on log 1[cite: 14].</li>
+          <li><b>Advanced Modeling:</b> Implement a dynamic motion model capable of adapting to varying speeds and explore alternative resampling schemes for harsh environments[cite: 14].</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="case-footer-nav">
+    <a class="case-link" href="index.html">← Back to portfolio</a>
+  </div>
+
+</div>
+
+</body>
+</html>

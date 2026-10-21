@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inverter Repackage — CMR FSAE — Varun Sureka</title>
+<!-- Copy the font <link> from your gantry.html here so the fonts match -->
+<link rel="stylesheet" href="styles.css">
+<!--
+IMAGES to export from the CDR deck into assets/fsae/ (slide numbers in parentheses):
+  assembly-render.png   (slide 10, left)    full assembly
+  exploded.png          (slide 10, right)   coldplates + standoffs exploded
+  coldplate-top.png     (slide 11)          top view with 400 x 324 mm dimensions
+  coldplate-channel.png (slide 12, left)    flow channel
+  cfd-100w.png          (slide 13)          CFD at 100 W
+  cfd-150w.png          (slide 14)          CFD at 150 W
+  standoff-fea.png      (slide 16)          standoff force analysis
+  hand-calcs.png        (slide 17, right)   bolt shear hand calcs
+-->
+</head>
+<body>
+
+<div class="wrap wrap-wide">
+  <a class="case-back mono" href="index.html">← Back to portfolio</a>
+
+  <div class="case-header">
+    <h1 class="case-title">Inverter Repackage — Carnegie Mellon Racing (FSAE)</h1>
+    <div class="case-tags">
+      <span class="case-tag">May 2023</span>
+      <span class="case-tag">System Lead</span>
+      <span class="case-tag">SolidWorks, SimScale, Ansys</span>
+    </div>
+  </div>
+
+  <figure class="case-hero-figure">
+    <div class="case-hero" style="width: 100%; overflow: hidden; background: var(--surface-raised);">
+      <img src="assets/fsae/iso3.png" alt="Inverter System Mounted on Custom Coldplates" style="width: 100%; height: auto; display: block; object-fit: cover;">
+    </div>
+    <figcaption class="schematic-caption">Inverter System Mounted on Custom Coldplates</figcaption>
+  </figure>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Overview</div><div class="rule"></div></div>
+    <div class="case-cols">
+
+      <div class="case-card" style="background: var(--fsae-tile-background);">
+        <h3 class="case-card-title">Background</h3>
+        <ul>
+          <li>The previous generation inverter package was tall, heavy, and difficult to assemble.</li>
+          <li><b>Design Goals:</b> Reduce vertical footprint and overall system mass, improve heat dissipation, and make assembly in the inverter container secure and easy.</li>
+        </ul>
+      </div>
+
+      <div class="case-card" style="background: var(--fsae-tile-background);">
+        <h3 class="case-card-title">Approach</h3>
+        <ul>
+          <li>Two 6061 aluminum coldplates (400&times;324&times;17mm) cooled in parallel.</li>
+          <li>Used 3D-printed Nylon 12 support standoffs bolted directly to the Inverter Container floor.</li>
+        </ul>
+      </div>
+
+      <div class="case-card" style="background: var(--fsae-tile-background);">
+        <h3 class="case-card-title">Requirements & Constraints</h3>
+        <ul>
+          <li><b>Mass:</b> &lt;2000g total system mass.</li>
+          <li><b>Loading Conditions:</b> Must sustain 10g vertical and 15g lateral loads.</li>
+          <li><b>Thermal Requirement:</b> Keep IGBT surface temperature below 50°C to prevent thermal throttling.</li>
+          <li><b>Serviceability:</b> The entire package must be removable using only the bolts that mount to the Inverter Container.</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="case-cols case-cols-2">
+      
+      <figure class="schematic-figure" style="margin-top: 10px; display: flex; flex-direction: column;">
+        <img src="assets/fsae/top view 1.png" alt="Inverter Coldplate Top View" style="width: 100%; object-fit: cover; display: block; border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption">Inverter Coldplate System Top View</figcaption>
+      </figure>
+
+      <figure class="schematic-figure" style="margin-top: 10px; display: flex; flex-direction: column;">
+        <img src="assets/fsae/iso with flow channel 1.png" alt="Isometric View of Flow Channel" style="width: 100%; object-fit: cover; display: block; border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption">Isometric View of Flow Channel</figcaption>
+      </figure>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2: Engineering Analysis -->
+  <div class="case-section">
+    <div class="section-title-wrap">
+      <div class="section-title">Engineering Analysis</div>
+      <div class="rule"></div>
+    </div>
+    
+    <!-- Text Row: Thermal & Structural Side-by-Side -->
+    <div class="case-cols case-cols-2" style="align-items: stretch; margin-bottom: 32px;">
+      
+      <!-- Thermal Text -->
+      <div class="case-card case-card-lg" style="background: var(--fsae-tile-background); margin: 0;">
+        <h3 class="case-card-title">Thermal CFD</h3>
+        <ul>
+          <li><b>Assumptions:</b> Modeled constant-power cases at 100W and 150W. Boundary conditions of zero gauge outlet pressure and 35&deg;C ambient temperature. For hand calculations, I assumed that the system was at steady state, there was negligible loss due to radiation, incompressible flow, and the tube was smooth.</li>
+          <li><b>Results:</b> At the 150W maximum output, the model predicted a peak IGBT temperature of 43.5&deg;C and an outlet water temperature of 36&deg;C.</li>
+          <li><b>Validation:</b> Performed hand calculations to determine a worst case maximum 3&deg;C coolant temperature increase. CFD showed the actual &Delta;T was only 1&deg;C, validating the internal flow geometry and justifying that the coldplate would not overwhelm the vehicle's cooling loop.</li>
+        </ul>
+      </div>
+
+      <!-- Structural Text -->
+      <div class="case-card case-card-lg" style="background: var(--fsae-tile-background); margin: 0;">
+        <h3 class="case-card-title">Structural Analysis</h3>
+        <ul>
+          <li><b>Assumptions:</b> Modeled the 4kg system as a rigidly mounted point mass. Assumed linear, isotropic properties for the Aluminum 6061 coldplate and Nylon 12 standoffs. Assumed worst-case equal shear distribution across all four M3 bolts.</li>
+          <li><b>Failure Mode Analysis: Compression:</b> A 10G vertical load distributed across the ~28mm&sup2; combined cross-sectional area of the four M3 standoffs, the average compressive stress is ~14 MPa. Against Aluminum 6061's yield strength of 276 MPa, this yields a Factor of Safety of ~19.7.</li>
+          <li><b>Failure Mode Analysis: Shear:</b> A 15G lateral acceleration on the 4kg mass distributed across the four M3 bolts resulted in a shear stress of ~20.8 MPa. Compared to a standard Class 8.8 steel bolt's shear yield strength of ~320 MPa, the system has a Factor of Safety > 15.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- CFD Image Row 1: 150W -->
+    <div class="case-cols case-cols-2" style="margin-bottom: 24px;">
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/fsae/150W coldplate.png" alt="IGBT Surface Temperature of 43.5&deg;C at 150W Constant Power" style="width: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption" style="margin-top: 8px; text-align: center;">IGBT Surface Temperature of 43.5&deg;C at 150W Constant Power</figcaption>
+      </figure>
+
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/fsae/150W fluid.png" alt="Fluid Outlet Temperature of 36&deg;C at 150W Constant Power" style="width: 100%; object-fit: cover; display: block; background: var(--paper-raised); border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption" style="margin-top: 8px; text-align: center;">Fluid Outlet Temperature of 36&deg;C at 150W Constant Power</figcaption>
+      </figure>
+    </div>
+
+    <!-- CFD Image Row 2: 100W -->
+    <div class="case-cols case-cols-2">
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/fsae/100W coldplate.png" alt="IGBT Surface Temperature of 40.6&deg;C at 100W Constant Power" style="width: 100%; object-fit: cover; display: block; border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption" style="margin-top: 8px; text-align: center;">IGBT Surface Temperature of 40.6&deg;C at 100W Constant Power</figcaption>
+      </figure>
+
+      <figure class="schematic-figure" style="margin: 0; display: flex; flex-direction: column;">
+        <img src="assets/fsae/100W fluid.png" alt="Fluid Outlet Temperature of 35.7&deg;C at 100W Constant Power" style="width: 100%; object-fit: cover; display: block; border: 1px solid var(--line-strong);">
+        <figcaption class="schematic-caption" style="margin-top: 8px; text-align: center;">Fluid Outlet Temperature of 35.7&deg;C at 100W Constant Power</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Results & Future Work -->
+  <div class="case-section">
+    <div class="section-title-wrap">
+      <div class="section-title">Results & Future Work</div>
+      <div class="rule"></div>
+    </div>
+    
+    <div class="case-cols case-cols-2" style="align-items: start; gap: 20px;">
+      
+      <!-- Results Column -->
+      <div style="border-left: 2px solid var(--fsae-tile-background); padding-left: 16px;">
+        <h3 style="margin-top: 0;">Results</h3>
+        <ul>
+          <li><b>Mass Reduction:</b> Achieved a 50% overall mass reduction (1500g) over the previous iteration.</li>
+          <li><b>Thermal Performance:</b> Reduced the surface temperature differential by 5&deg;C while maintaining steady-state temperatures below the IGBT throttling limits, with a maximum fluid temperature delta of just 1&deg;C.</li>
+          <li><b>Structural Integrity:</b> Factors of Safety against compression and shear loading conditions of 19.7 and 15, respectively.</li>
+        </ul>
+      </div>
+
+      <!-- Future Work Column -->
+      <div style="border-left: 2px solid var(--fsae-tile-background); padding-left: 16px; color: var(--ink);">
+        <h3 style="margin-top: 0;">Future Work</h3>
+        <ul>
+         <li><b>Transient Thermal Modeling:</b> Shift from steady-state CFD to transient simulations to evaluate system performance over a full endurance lap.</li>
+          <li><b>Dynamic Structural FEA:</b> Analyze vibration and shock loading conditions to more thoroughly assess bolt performance.</li>
+          <li><b>Pressure Drop Analysis:</b> Perform more robust headloss estimations to accurately predict the coldplate's pressure impact on the overall cooling loop.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="case-footer-nav">
+    <a class="case-link" href="index.html">← Back to portfolio</a>
+  </div>
+</div>
+</body>
+</html>
