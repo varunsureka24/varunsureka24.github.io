@@ -200,3 +200,8 @@ section-title-wrap
 @media (max-width: 720px) {
   .result-trio { grid-template-columns: 1fr; }
 }
+
+.case-tag--link { text-decoration: none; background: var(--paper); color: var(--blueprint); border-color: var(--line-strong); }
+.case-tag--link:hover { color: var(--signal); border-color: var(--signal); }
+.case-footer-nav .case-link + .case-link { margin-left: 24px; }
+.case-link + .case-link { margin-left: 20px; }
