@@ -21,7 +21,6 @@ The demo video is embedded from YouTube, so it needs no local file.
     <h1 class="case-title">Whiteboard Drawing with Franka Arm</h1>
     <div class="case-tags">
       <span class="case-tag">Fall 2024</span>
-      <span class="case-tag">RKD Capstone</span>
       <span class="case-tag">Best Project</span>
       <span class="case-tag">Python, Git, FrankaAPI</span>
     </div>
@@ -37,12 +36,7 @@ The demo video is embedded from YouTube, so it needs no local file.
   <div class="case-section">
     <div class="section-title-wrap"><div class="section-title">The Task</div><div class="rule"></div></div>
     <div class="case-prose">
-      <p>Program a 7-DOF Franka Emika Panda to work autonomously: pick up a pen, carry it to a whiteboard, draw lines and curves, and place the pen in a drop bin. The robot had to complete the full sequence three times while adapting to different pen locations, whiteboard positions, and orientations.</p>
-    </div>
-    <div class="specs">
-      <div class="spec"><span class="spec-value mono">7-DOF</span><span class="spec-label">Franka Emika Panda arm</span></div>
-      <div class="spec"><span class="spec-value mono">3×</span><span class="spec-label">full pick, draw, drop sequences required</span></div>
-      <div class="spec"><span class="spec-value mono">Best Project</span><span class="spec-label">awarded in the course</span></div>
+      <p>Program a 7-DOF Franka Emika Panda to autonomously pick up a pen, carry it to a whiteboard, draw lines and curves, and place the pen in a drop bin. The robot had to complete the full sequence three times while adapting to different pen locations, whiteboard positions, and orientations.</p>
     </div>
   </div>
 
@@ -87,7 +81,7 @@ The demo video is embedded from YouTube, so it needs no local file.
         <p>To fix that, I varied the time parameter passed to the interpolation function smoothly, so acceleration ramps up and down gradually. That keeps acceleration and jerk within feasible limits and makes the trajectory more stable.</p>
       </div>
       <figure class="schematic-figure">
-        <img src="assets/franka/trapezoidal_profile.png" alt="Trapezoidal and S-curve velocity profiles compared">
+        <img src="assets/rkd/trapezoidal_profile.png" alt="Trapezoidal and S-curve velocity profiles compared" style="">
         <figcaption class="schematic-caption">Trapezoidal profile versus the S-curve</figcaption>
       </figure>
     </div>
