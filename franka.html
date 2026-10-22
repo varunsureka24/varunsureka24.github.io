@@ -8,17 +8,17 @@
 <link rel="stylesheet" href="styles.css">
 <!--
 MEDIA to add in assets/franka/:
-  trapezoidal_profile.png   from docs/ in your repo (trapezoidal vs S-curve diagram)
+  trapezoidal_profile.png   from docs/ in your repo
 The demo video is embedded from YouTube, so it needs no local file.
 -->
 </head>
 <body>
 
-<div class="wrap wrap-wide">
+<div class="wrap">
   <a class="case-back mono" href="index.html">← Back to portfolio</a>
 
   <div class="case-header">
-    <h1 class="case-title">Whiteboard Drawing with Franka Arm</h1>
+    <h1 class="case-title">Whiteboard Drawing with a Franka Arm</h1>
     <div class="case-tags">
       <span class="case-tag">Fall 2024</span>
       <span class="case-tag">Best Project</span>
@@ -26,76 +26,48 @@ The demo video is embedded from YouTube, so it needs no local file.
     </div>
   </div>
 
-  <figure class="case-hero-figure">
-    <div class="case-hero">
-      <iframe src="https://www.youtube.com/embed/k4Xcv1jUgHI" title="Franka arm whiteboard drawing demo" style="width:100%; height:100%; border:0;" loading="lazy" allowfullscreen></iframe>
-    </div>
-    <figcaption class="schematic-caption">Franka Emika Panda picking up a pen, drawing on the whiteboard, and dropping the pen in the bin</figcaption>
-  </figure>
-
   <div class="case-section">
-    <div class="section-title-wrap"><div class="section-title">The Task</div><div class="rule"></div></div>
-    <div class="case-prose">
-      <p>Program a 7-DOF Franka Emika Panda to autonomously pick up a pen, carry it to a whiteboard, draw lines and curves, and place the pen in a drop bin. The robot had to complete the full sequence three times while adapting to different pen locations, whiteboard positions, and orientations.</p>
+    <div class="section-title-wrap"><div class="section-title">Video Demonstration</div><div class="rule"></div></div>
+    <div class="case-hero" style="margin: 0;">
+      <iframe src="https://www.youtube.com/embed/k4Xcv1jUgHI" title="Franka arm whiteboard drawing demo" style="width: 100%; height: 100%; border: 0;" loading="lazy" allowfullscreen></iframe>
     </div>
   </div>
 
   <div class="case-section">
-    <div class="section-title-wrap"><div class="section-title">How It Works</div><div class="rule"></div></div>
-    <div class="case-cols">
-
-      <div class="case-card">
-        <h3 class="case-card-title">Kinematics</h3>
-        <ul>
-          <li>Forward kinematics built from DH parameters</li>
-          <li>Inverse kinematics solved by gradient descent, which converges quickly and places the end effector accurately</li>
-        </ul>
-      </div>
-
-      <div class="case-card">
-        <h3 class="case-card-title">Motion Planning</h3>
-        <ul>
-          <li>Joint-space and Cartesian-space interpolation for smooth, precise drawing motions</li>
-          <li>S-curve time parameterization for gradual acceleration and deceleration</li>
-          <li>Lines and arbitrary curves traced while the pen stays in contact with the board</li>
-        </ul>
-      </div>
-
-      <div class="case-card">
-        <h3 class="case-card-title">Safety and Recovery</h3>
-        <ul>
-          <li>Collision avoidance around the table, pen holder, and whiteboard</li>
-          <li>Adaptive placement for varying pen and board positions</li>
-          <li>Human-in-the-loop input to recover from a failed grasp or misalignment</li>
-        </ul>
-      </div>
-
+    <div class="section-title-wrap"><div class="section-title">Overview</div><div class="rule"></div></div>
+    <div class="case-prose">
+      <p>This capstone project involves programming a Franka Emika Panda robot to autonomously pick up a pen, move it to a whiteboard, draw lines and curves, and place the pen in a drop bin. The robot must successfully complete this sequence three times while adapting to different pen locations, whiteboard positions, and orientations.</p>
+      <p>The project focuses on robot kinematics, inverse kinematics (IK), trajectory generation, and collision avoidance, showcasing our approach to robot motion planning in constrained environments.</p>
     </div>
+  </div>
+
+  <div class="case-section">
+    <div class="section-title-wrap"><div class="section-title">Key Features</div><div class="rule"></div></div>
+    <ul class="entry-bullets">
+      <li><strong>Pen Grasping &amp; Handling:</strong> The robot uses its gripper to pick up a pen from a holder and properly orient it for drawing.</li>
+      <li><strong>Forward Kinematics:</strong> Implemented DH parameters for accurate kinematic transformations.</li>
+      <li><strong>Gradient Descent for Inverse Kinematics:</strong> Used iterative optimization to solve inverse kinematics efficiently, ensuring fast convergence and smooth, accurate end-effector positioning.</li>
+      <li><strong>Trajectory Planning:</strong> Used joint-space and Cartesian-space interpolation to generate smooth and precise drawing motions.</li>
+      <li><strong>Time-Parameterized Motion Planning:</strong> Implemented smooth velocity profiles with S-curve motion planning to ensure gradual acceleration and deceleration, reducing torque spikes and improving trajectory stability.</li>
+      <li><strong>Collision Avoidance:</strong> Ensured safe movement by avoiding obstacles such as the table, pen holder, and whiteboard.</li>
+      <li><strong>Drawing Execution:</strong> Successfully traced lines and arbitrary curves while maintaining pen contact with the whiteboard.</li>
+      <li><strong>Adaptive Placement:</strong> The robot adapts to varying pen and board positions, placing the pen securely in a drop location after use.</li>
+      <li><strong>Human-in-the-loop Recovery:</strong> Allows manual inputs to recover from errors like failed grasping or misalignment.</li>
+    </ul>
   </div>
 
   <div class="case-section">
     <div class="section-title-wrap"><div class="section-title">S-Curve Velocity Profile</div><div class="rule"></div></div>
-    <div class="case-media-row">
-      <div class="case-prose">
-        <p>A standard trapezoidal velocity profile has instantaneous jumps in acceleration where it changes segments. Those jumps raise the torque demand on the motors.</p>
-        <p>To fix that, I varied the time parameter passed to the interpolation function smoothly, so acceleration ramps up and down gradually. That keeps acceleration and jerk within feasible limits and makes the trajectory more stable.</p>
-      </div>
-      <figure class="schematic-figure">
-        <img src="assets/rkd/trapezoidal_profile.png" alt="Trapezoidal and S-curve velocity profiles compared" style="">
-        <figcaption class="schematic-caption">Trapezoidal profile versus the S-curve</figcaption>
-      </figure>
+    <div class="case-prose">
+      <p>To ensure smooth acceleration and deceleration, we implemented an S-curve motion planning approach, shown alongside the standard trapezoidal trajectory profile in the diagram below.</p>
     </div>
-  </div>
-
-  <div class="case-section">
-    <div class="section-title-wrap"><div class="section-title">My Role</div><div class="rule"></div></div>
-    <div class="case-role-box">
-      <ul class="entry-bullets">
-        <li>Implemented the motion control system for continuous-line drawing on the whiteboard</li>
-        <li>Developed the velocity profiles and motion constraints for smooth, collision-free trajectories</li>
-      </ul>
+    <figure class="schematic-figure" style="margin: 16px 0;">
+      <img src="assets/rkd/trapezoidal_profile.png" alt="Trapezoidal and S-curve velocity profiles compared" style="width: 100%; height: auto; display: block;">
+      <figcaption class="schematic-caption">Trapezoidal profile versus the S-curve profile</figcaption>
+    </figure>
+    <div class="case-prose">
+      <p>The trapezoidal profile has instantaneous changes in acceleration at its transition points, which increases the torque demand on the motors. To resolve this, we smoothly varied the time parameter passed to the interpolation function, allowing acceleration to change gradually. This improved trajectory stability by keeping acceleration and jerk within feasible limits.</p>
     </div>
-    <div class="case-placeholder-note">This was a team project. Add which pieces you personally owned, such as IK, the S-curve profile, or collision avoidance.</div>
   </div>
 
   <div class="case-footer-nav">
