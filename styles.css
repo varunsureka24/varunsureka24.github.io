@@ -205,3 +205,6 @@ section-title-wrap
 .case-tag--link:hover { color: var(--signal); border-color: var(--signal); }
 .case-footer-nav .case-link + .case-link { margin-left: 24px; }
 .case-link + .case-link { margin-left: 20px; }
+
+.exp-entry--compact { padding: 14px 0; }
+.exp-entry--compact .exp-head { min-height: 44px; }
